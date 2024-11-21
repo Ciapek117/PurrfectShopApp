@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'auth/login_screen.dart';
 
-//SplashScreen DIY bo wtyczka nie dziala
+//SplashScreen DIY poniewaz wtyczka nie dziala
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
