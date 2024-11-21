@@ -35,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset('images/logoCatGold.png', fit: BoxFit.cover, height: 350,),
             const Text("Login ",
