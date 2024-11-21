@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key, required this.label, required this.onPressed});
@@ -11,11 +10,11 @@ class CustomButton extends StatelessWidget {
     return Container(
         width: 180,
         height: 42,
-        margin: EdgeInsets.symmetric(horizontal: 90),
+        margin: const EdgeInsets.symmetric(horizontal: 90),
         child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFD2AF43),
+              backgroundColor: const Color(0xFFD2AF43),
             ),
             child: Text(
               label,

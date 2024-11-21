@@ -2,6 +2,7 @@ import 'package:purrfectshop_app/auth/auth_service.dart';
 import 'package:purrfectshop_app/auth/login_screen.dart';
 import 'package:purrfectshop_app/widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:purrfectshop_app/widgets/navigation_bottom.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,6 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = AuthService();
     return Scaffold(
+      bottomNavigationBar: MyNavBarBottom(onTabChange: (value){},),
       body: Align(
         alignment: Alignment.center,
         child: Column(
@@ -20,13 +22,7 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 20),
-            CustomButton(
-              label: "Sign Out",
-              onPressed: () async {
-                await auth.signout();
-                goToLogin(context);
-              },
-            )
+
           ],
         ),
       ),
@@ -38,3 +34,12 @@ class HomeScreen extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
 }
+
+
+//CustomButton(
+//               label: "Sign Out",
+//               onPressed: () async {
+//                 await auth.signout();
+//                 goToLogin(context);
+//               },
+//             )

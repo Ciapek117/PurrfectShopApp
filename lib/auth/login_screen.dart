@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:purrfectshop_app/auth/auth_service.dart';
 import 'package:purrfectshop_app/auth/signup_screen.dart';
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFF5F0F40),
+      backgroundColor: const Color(0xFF5F0F40),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
@@ -62,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 5),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-               Text("Don't have an account yet? ", style: TextStyle(color: Colors.white),),
+               const Text("Don't have an account yet? ", style: TextStyle(color: Colors.white),),
               InkWell(
                 onTap: () => goToSignup(context),
                 child:
