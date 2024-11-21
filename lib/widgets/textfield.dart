@@ -14,22 +14,19 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: TextField(
-        style: TextStyle(color: Colors.orange[400]),
-        obscureText: isPassword,
-        controller: controller,
-        decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.yellow[700]),
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            label: Text(label, style: TextStyle(color: Colors.yellow[700]),),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.black, width: 2))),
-      )
+    return TextField(
+      style: TextStyle(color: Colors.orange[400]),
+      obscureText: isPassword,
+      controller: controller,
+      decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: Colors.yellow[700]),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          label: Text(label, style: TextStyle(color: Colors.yellow[700]),),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.black, width: 1))),
     );
-
   }
 }
