@@ -54,13 +54,14 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _password,
               isPassword: true,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             CustomButton(
               label: "Login",
               onPressed: _login,
             ),
             const SizedBox(height: 5),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const SizedBox(height: 30),
                const Text("Don't have an account yet? ", style: TextStyle(color: Colors.white),),
               InkWell(
                 onTap: () => goToSignup(context),

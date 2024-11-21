@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const Text("Signup",
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFD2AF43))),
             const SizedBox(
-              height: 50,
+              height: 25,
             ),
             CustomTextField(
               hint: "Enter Name",
@@ -61,13 +61,14 @@ class _SignupScreenState extends State<SignupScreen> {
               isPassword: true,
               controller: _password,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             CustomButton(
               label: "Signup",
               onPressed: _signup,
             ),
             const SizedBox(height: 5),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const SizedBox(height: 30),
               const Text("Already have an account? ", style: TextStyle(color: Colors.white),),
               InkWell(
                 onTap: () => goToLogin(context),
