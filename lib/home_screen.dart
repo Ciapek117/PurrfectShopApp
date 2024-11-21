@@ -1,17 +1,39 @@
 import 'package:purrfectshop_app/auth/auth_service.dart';
 import 'package:purrfectshop_app/auth/login_screen.dart';
+import 'package:purrfectshop_app/pages/home_page.dart';
 import 'package:purrfectshop_app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:purrfectshop_app/widgets/navigation_bottom.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  void navigateBottomBar(int index){
+      setState(() {
+        _selectedIndex = index;
+      });
+  }
+
+  final List<Widget> _pages = [
+    const HomePage(),
+    //const AlbumPage(),
+    //const CartPage(),
+    //const LogoutPage()
+  ];
+
 
   @override
   Widget build(BuildContext context) {
     final auth = AuthService();
     return Scaffold(
-      bottomNavigationBar: MyNavBarBottom(onTabChange: (value){},),
+      bottomNavigationBar: MyNavBarBottom(onTabChange: (index) =>  navigateBottomBar(index)),
       backgroundColor: Color(0xFF5F0F40),
       appBar: AppBar(
         centerTitle: true,
@@ -19,20 +41,7 @@ class HomeScreen extends StatelessWidget {
         title: Image.asset('images/goldCatText.png', color: Color(0xFFD2AF43)),
         backgroundColor: Colors.transparent,
       ),
-      body: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Welcome users",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-            ),
-            const SizedBox(height: 20),
-
-          ],
-        ),
-      ),
+      body: _pages[_selectedIndex],
     );
   }
 
