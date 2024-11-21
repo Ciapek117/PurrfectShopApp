@@ -18,16 +18,16 @@ class _MyNavBarBottomState extends State<MyNavBarBottom> {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GNav(
             tabBorder: Border(
-                top: BorderSide(color: Color(0xFF5F0F40), width: 2, strokeAlign: 3),
-                bottom: BorderSide(color: Color(0xFF5F0F40), width: 2, strokeAlign: 3),
-                left: BorderSide(color: Color(0xFF5F0F40), width: 2, strokeAlign: 3),
-                right: BorderSide(color: Color(0xFF5F0F40), width: 2, strokeAlign: 3)
+                top: BorderSide(color: Color(0xFFD2AF43), width: 2, strokeAlign: 3),
+                bottom: BorderSide(color: Color(0xFFD2AF43), width: 2, strokeAlign: 3),
+                left: BorderSide(color: Color(0xFFD2AF43), width: 2, strokeAlign: 3),
+                right: BorderSide(color: Color(0xFFD2AF43), width: 2, strokeAlign: 3)
             ),
           //backgroundColor: Color(0xFFD2AF43),
-            color: const Color(0xFF5F0F40),
-            activeColor: const Color(0xFFD2AF43),
-            tabActiveBorder: Border.all(color: const Color(0xFF5F0F40), strokeAlign: 3, width: 2),
-            tabBackgroundColor: const Color(0xFF5F0F40),
+            color: const Color(0xFFD2AF43),
+            activeColor: const Color(0xFF5F0F40),
+            tabActiveBorder: Border.all(color: const Color(0xFFD2AF43), strokeAlign: 3, width: 2),
+            tabBackgroundColor: const Color(0xFFD2AF43),
             mainAxisAlignment: MainAxisAlignment.spaceAround,
 
             tabBorderRadius: 35,
@@ -39,7 +39,7 @@ class _MyNavBarBottomState extends State<MyNavBarBottom> {
                return widget.onTabChange!(value);
             },
             tabs: [
-              const GButton(icon: Icons.shopping_bag_rounded, text: 'Cart',iconColor: Color(0xFF5F0F40),),
+              const GButton(icon: Icons.shopping_bag_rounded, text: 'Cart',iconColor: Color(0xFFD2AF43),),
               GButton(
                 icon: Icons.shopping_bag_rounded, // Placeholder icon (required)
                 leading: Container(
@@ -48,12 +48,15 @@ class _MyNavBarBottomState extends State<MyNavBarBottom> {
                       width: 25,
                       height: 25,
                       fit: BoxFit.cover,
-                      color: (_selectedIndex == 1) ? const Color(0xFFD2AF43) : const Color(0xFF5F0F40)
+                      color: (_selectedIndex == 1) ? const Color(0xFF5F0F40) : const Color(0xFFD2AF43)
                   ),
                 ),
                 text: 'Home',
               ),
-              const GButton(icon: Icons.logout, text: 'Logout', iconColor: Color(0xFF5F0F40))
+
+              const GButton(icon: Icons.photo, text: 'Album', iconColor: Color(0xFFD2AF43)),
+
+              const GButton(icon: Icons.logout, text: 'Logout', iconColor: Color(0xFFD2AF43))
             ])
     );
   }

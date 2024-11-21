@@ -12,10 +12,12 @@ class HomeScreen extends StatelessWidget {
     final auth = AuthService();
     return Scaffold(
       bottomNavigationBar: MyNavBarBottom(onTabChange: (value){},),
+      backgroundColor: Color(0xFF5F0F40),
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false, // This hides the back arrow
-        title: Image.asset('images/goldCatText.png', color: Color(0xFF5F0F40),),
+        title: Image.asset('images/goldCatText.png', color: Color(0xFFD2AF43)),
+        backgroundColor: Colors.transparent,
       ),
       body: Align(
         alignment: Alignment.center,
