@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToLogin() {
     // Przejście do ekranu logowania po 2 sekundach
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
