@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset('images/logoCatGold.png', fit: BoxFit.cover, height: 350,),
-            const Text("Login",
+            const Text("Login ",
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFD2AF43)),
                 textAlign: TextAlign.left,
             ),
