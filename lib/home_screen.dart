@@ -1,6 +1,9 @@
 import 'package:purrfectshop_app/auth/auth_service.dart';
 import 'package:purrfectshop_app/auth/login_screen.dart';
+import 'package:purrfectshop_app/pages/album_page.dart';
+import 'package:purrfectshop_app/pages/cart_page.dart';
 import 'package:purrfectshop_app/pages/home_page.dart';
+import 'package:purrfectshop_app/pages/logout_page.dart';
 import 'package:purrfectshop_app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:purrfectshop_app/widgets/navigation_bottom.dart';
@@ -23,9 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    //const AlbumPage(),
-    //const CartPage(),
-    //const LogoutPage()
+    const AlbumPage(),
+    const CartPage(),
+    const LogoutPage()
   ];
 
 
