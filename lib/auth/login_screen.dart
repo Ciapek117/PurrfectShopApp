@@ -53,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hint: "Enter Password",
               label: "Password",
               controller: _password,
+              isPassword: true,
             ),
             const SizedBox(height: 30),
             CustomButton(
