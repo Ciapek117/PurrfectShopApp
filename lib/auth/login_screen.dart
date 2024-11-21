@@ -30,52 +30,49 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      SingleChildScrollView(
-        child: Scaffold(
-        backgroundColor: Color(0xFF5F0F40),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset('images/logoCatGold.png', fit: BoxFit.cover, height: 350,),
-              const Text("Login",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFD2AF43)),
-                  textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 25),
-              CustomTextField(
-                hint: "Enter Email",
-                label: "Email",
-                controller: _email,
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                hint: "Enter Password",
-                label: "Password",
-                controller: _password,
-              ),
-              const SizedBox(height: 30),
-              CustomButton(
-                label: "Login",
-                onPressed: _login,
-              ),
-              const SizedBox(height: 5),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                 Text("Don't have an account yet? ", style: TextStyle(color: Colors.white),),
-                InkWell(
-                  onTap: () => goToSignup(context),
-                  child:
-                      const Text("Signup", style: TextStyle(color: Color(0xFFD2AF43))),
-                )
-              ]),
-              const Spacer()
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: Color(0xFF5F0F40),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset('images/logoCatGold.png', fit: BoxFit.cover, height: 350,),
+            const Text("Login",
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFD2AF43)),
+                textAlign: TextAlign.left,
+            ),
+            const SizedBox(height: 25),
+            CustomTextField(
+              hint: "Enter Email",
+              label: "Email",
+              controller: _email,
+            ),
+            const SizedBox(height: 20),
+            CustomTextField(
+              hint: "Enter Password",
+              label: "Password",
+              controller: _password,
+            ),
+            const SizedBox(height: 30),
+            CustomButton(
+              label: "Login",
+              onPressed: _login,
+            ),
+            const SizedBox(height: 5),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+               Text("Don't have an account yet? ", style: TextStyle(color: Colors.white),),
+              InkWell(
+                onTap: () => goToSignup(context),
+                child:
+                    const Text("Signup", style: TextStyle(color: Color(0xFFD2AF43))),
+              )
+            ]),
+            const Spacer()
+          ],
         ),
       ),
-      );
+    );
   }
 
   goToSignup(BuildContext context) => Navigator.push(
