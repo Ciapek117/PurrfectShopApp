@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//SplashScreen DIY bo wtyczka nie dziala
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
