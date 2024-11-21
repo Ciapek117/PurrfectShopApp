@@ -1,0 +1,31 @@
+buildscript {
+    repositories {
+        google()   // Dodajemy repozytorium Google
+        mavenCentral() // Dodajemy repozytorium Maven Central
+    }
+
+    dependencies {
+        // Dodajemy wersję pluginu Google Services
+        classpath 'com.android.tools.build:gradle:8.0.2'  // Wersja Gradle Plugin
+        classpath 'com.google.gms:google-services:4.4.2' // Plugin Google Services
+    }
+}
+
+allprojects {
+    repositories {
+        google()   // Dodajemy repozytorium Google
+        mavenCentral()  // Dodajemy repozytorium Maven Central
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

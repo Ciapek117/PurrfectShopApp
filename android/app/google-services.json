@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1063973618352",
+    "project_id": "purrfectsh",
+    "storage_bucket": "purrfectsh.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063973618352:android:b9756280fb429f5ceb7175",
+        "android_client_info": {
+          "package_name": "com.example.purrfectshop_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXnL43i1BVFdTtLcmDSEBeJIvgQ3j3IO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
