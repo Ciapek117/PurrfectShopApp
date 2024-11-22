@@ -8,6 +8,7 @@ class CatImageScreen extends StatefulWidget {
 
 class _CatImageScreenState extends State<CatImageScreen> {
   String? imageUrl;
+  String? tag;
 
   @override
   void initState() {
@@ -17,21 +18,23 @@ class _CatImageScreenState extends State<CatImageScreen> {
 
   void fetchCatImage() async {
     try {
-      // Pobierz dokument `cat1` z kolekcji `catphotos`
+      print('Pobieranie danych z Firestore...');
       final doc = await FirebaseFirestore.instance
           .collection('catphotos')
           .doc('cat1')
           .get();
 
       if (doc.exists) {
+        print('Dokument znaleziony: ${doc.data()}');
         setState(() {
-          imageUrl = doc['imageUrl']; // Pobranie URL z pola `imageUrl`
+          imageUrl = doc['imageUrl'];
+          tag = doc['tag'];
         });
       } else {
         print('Dokument nie istnieje!');
       }
     } catch (e) {
-      print('Błąd: $e');
+      print('Błąd podczas pobierania danych: $e');
     }
   }
 
@@ -42,12 +45,23 @@ class _CatImageScreenState extends State<CatImageScreen> {
         title: Text('Cat Photo'),
       ),
       body: Center(
-        child: imageUrl == null
-            ? CircularProgressIndicator() // Pokazanie loadera w trakcie pobierania
-            : Image.network(
-          imageUrl!,
-            errorBuilder: (context, error, stackTrace) => Text('Nie udało się załadować obrazu'),
-        ),
+        child: Row(
+          children: [
+            imageUrl == null
+                ? CircularProgressIndicator() // Pokazanie loadera w trakcie pobierania
+                : Image.network(
+                  imageUrl!, width: 100, height: 100,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(child: CircularProgressIndicator());
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Text('Nie udało się załadować obrazu.');
+              },
+            ),
+            Text('$tag')
+          ],
+        )
       ),
     );
   }
