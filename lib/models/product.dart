@@ -2,6 +2,8 @@ enum Tags{
   cos1,
   cos2,
   cos3,
+  cos4,
+  cos5,
 }
 
 class Product{
