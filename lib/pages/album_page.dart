@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:purrfectshop_app/models/all_products.dart';
+import 'package:purrfectshop_app/models/product.dart'; // Upewnij się, że zaimportowałeś model Product
 
 class AlbumPage extends StatefulWidget {
   const AlbumPage({super.key});
@@ -8,15 +10,19 @@ class AlbumPage extends StatefulWidget {
 }
 
 class _AlbumPageState extends State<AlbumPage> {
-  var allItems = List.generate(20, (index) => 'item $index');
-  var items = [];
-  var searchHistory = [];
-  final TextEditingController searchController = TextEditingController();
+  late AllProducts allProducts;
 
+  var allItems = [];
+  var items = [];
+  var selectedTags = <Tags>[];
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    allProducts = AllProducts(); // Inicjalizujemy AllProducts
+    allItems = allProducts.getProductList(); // Pobieramy listę produktów
+    items = allItems; // Początkowo wyświetlamy wszystkie produkty
     searchController.addListener(queryListener);
   }
 
@@ -27,51 +33,76 @@ class _AlbumPageState extends State<AlbumPage> {
     super.dispose();
   }
 
-  void queryListener(){
+  void queryListener() {
     search(searchController.text);
   }
 
-  void search(String query){
-    if(query.isEmpty){
+  void search(String query) {
+    if (query.isEmpty) {
       setState(() {
-        items = allItems;
+        items = allItems; // Jeśli brak zapytania, pokazujemy wszystkie produkty
       });
     } else {
       setState(() {
-        items = allItems.where((e) => e.toLowerCase().contains(query.toLowerCase())).toList();
+        // Filtrujemy produkty, które mają nazwę zawierającą wyszukiwaną frazę
+        items = allItems.where((e)
+        {
+          bool matchesName = e.name.toLowerCase().contains(query.toLowerCase());
+          bool matchesTags = selectedTags.isEmpty || selectedTags.any((tag) => e.tags == tag);
+
+          return matchesName || matchesTags;
+        }).toList();
       });
     }
+  }
+
+  void showTagSelectionDialog() async {
+    final List<Tags> allTags = Tags.values;
+    final List<Tags> selected = List.from(selectedTags);
+
+    bool? shouldUpdate = await showDialog<bool>(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text('Wybierz tag:'),
+
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF5F0F40),
-      body: Center(child: Padding(padding: const EdgeInsets.fromLTRB(8, 10, 8, 0), child: Column(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
+          child: Column(
             children: <Widget>[
               SearchBar(
                 controller: searchController,
                 hintText: 'Search..',
                 leading: IconButton(
-                    onPressed: (){}, 
-                    icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30))),
-
+                  onPressed: () {},
+                  icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30),
+                ),
+              ),
               Expanded(
                 child: ListView.builder(
-                    itemCount: items.isEmpty ? allItems.length : items.length,
-                    itemBuilder: (context, index) {
-                      final item = items.isEmpty ? allItems[index] : items[index];
-                
-                      return Card(
-                        child: Column(children: [
-                          Text('Name: $item'),
+                  itemCount: items.isEmpty ? allItems.length : items.length,
+                  itemBuilder: (context, index) {
+                    final item = items.isEmpty ? allItems[index] : items[index];
+
+                    return Card(
+                      child: Column(
+                        children: [
+                          Image.asset(item.imagePath), // Pokazujemy obrazek produktu
+                          Text('Name: ${item.name}'),
+                          Text('Price: \$${item.price}'),
                           const SizedBox(height: 8),
-                          Text(item),
-                        ]));
-                    }),
-              )
-            ]
-        )))
-    );
+                          Text(item.description)]));
+                  })),
+            ],
+          ))));
   }
 }
