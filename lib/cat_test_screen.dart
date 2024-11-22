@@ -18,7 +18,7 @@ class _CatImageScreenState extends State<CatImageScreen> {
 
   void fetchCatImage() async {
     try {
-      print('Pobieranie danych z Firestore...');
+      print('Pobieranie danych z Firestore..');
       final doc = await FirebaseFirestore.instance
           .collection('catphotos')
           .doc('cat1')
