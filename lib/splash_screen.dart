@@ -11,33 +11,46 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool moveUp = false;
+
   @override
   void initState() {
     super.initState();
-    _navigateToLogin();
+    Future.delayed(const Duration(seconds: 3), ()
+    {
+      setState(() {
+      moveUp = true;
+      });
+      Future.delayed(const Duration(seconds: 1), _navigateToLogin);
+    });
   }
 
   void _navigateToLogin() {
-    // Przejście do ekranu logowania po 2 sekundach
-    Timer(const Duration(seconds: 1), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF5F0F40),
-      body: Center(
-        child: Image.asset(
-          'images/logoCatGold.png', // Ścieżka do obrazka
-          fit: BoxFit.cover, // Dopasowanie obrazu
-          height: 300,
-          width: 300,
-        ),
+      body: Stack(
+        children: [
+          AnimatedPositioned(
+            duration: Duration(seconds: 1),
+            curve: Curves.easeInOut,
+            top: moveUp ? 0 :  MediaQuery.of(context).size.height / 2 - 200,
+            left: MediaQuery.of(context).size.width / 2 - 150,
+            child:  Image.asset(
+              'images/logoCatGold.png', // Ścieżka do obrazka
+              fit: BoxFit.cover, // Dopasowanie obrazu
+              height: 300,
+              width: 300,
+            ),
+          )
+        ],
       ),
     );
   }
