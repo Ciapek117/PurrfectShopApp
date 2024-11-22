@@ -18,7 +18,11 @@ class HomePage extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => CustomTile())),
+                  itemBuilder: (context, index) => CustomTile(
+                      backgroundColor: Color(0xFF61ccee).withOpacity(0.5),
+                      text: '-50% OFF!',
+                      imagePath: 'images/images_for_tiles/kot1.jpg',
+                  ))),
           ),
 
           const SizedBox(height: 20),
