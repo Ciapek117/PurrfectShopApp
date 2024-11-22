@@ -19,9 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 1), ()
     {
       setState(() {
-      moveUp = true;
-      });
-      Future.delayed(const Duration(seconds: 1), _navigateToLogin);
+        moveUp = true;
+        });
+        Future.delayed(const Duration(seconds: 1), _navigateToLogin);
     });
   }
 

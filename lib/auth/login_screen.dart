@@ -86,13 +86,32 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
 
-  _login() async {
-    final user =
-        await _auth.loginUserWithEmailAndPassword(_email.text, _password.text);
+  Future _login() async {
+    final user = await _auth.loginUserWithEmailAndPassword(_email.text, _password.text);
 
     if (user != null) {
+      // Jeśli użytkownik się zalogował, przechodzimy do strony głównej
       log("User Logged In");
       goToHome(context);
+    } else {
+      // Jeśli login lub hasło są błędne, pokazujemy AlertDialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Błąd podczas logowania'),
+            content: const Text('Błędny login lub hasło'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Zamknięcie dialogu
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }
