@@ -8,17 +8,15 @@ class CustomTile extends StatelessWidget {
     return Container(
       width: 220,
       decoration: BoxDecoration(
-        color: Color(0xFFD2AF43),
         borderRadius: BorderRadius.circular(10),
-      ),
+        image: DecorationImage(
+          image: AssetImage('images/images_for_tiles/kot1.jpg'),
+          fit: BoxFit.cover)),
+
       padding: EdgeInsets.all(20),
       margin: EdgeInsets.all(7),
-      child: Stack(
-        children: [
-          //Image.asset('images/imagesForTiles/kot1.jpg')
-        ],
-      ),
     );
+
 
   }
 }
