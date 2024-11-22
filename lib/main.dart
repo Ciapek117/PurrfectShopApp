@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:purrfectshop_app/auth/login_screen.dart';
+import 'package:purrfectshop_app/cat_test_screen.dart';
 import 'package:purrfectshop_app/pages/home_page.dart';
 import 'package:purrfectshop_app/splash_screen.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(), // Ustaw SplashScreen jako ekran początkowy
+      home: CatImageScreen(), // Ustaw SplashScreen jako ekran początkowy
 
       routes: { //do przechodzenia szybciej miedzy stronami jak usuniesz zabije
         '/homepage' : (context) => HomePage()
