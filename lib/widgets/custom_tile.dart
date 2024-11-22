@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:glowy_borders/glowy_borders.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,8 +8,9 @@ class CustomTile extends StatelessWidget {
   final Color backgroundColor;
   final String text;
   final String imagePath;
+  final double width;
 
-  CustomTile({super.key, required this.backgroundColor, required this.text, required this.imagePath});
+  CustomTile({super.key, required this.backgroundColor, required this.text, required this.imagePath, required this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class CustomTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(0.001),
         child: Container(
-          width: 220,
+          width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
