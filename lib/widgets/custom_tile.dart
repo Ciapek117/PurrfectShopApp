@@ -6,6 +6,7 @@ class CustomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      child: Center(child: Text('-50% OFF!', )),//style: GoogleFonts.,)),
       width: 220,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
