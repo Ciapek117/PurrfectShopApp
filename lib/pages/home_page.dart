@@ -22,10 +22,26 @@ class HomePage extends StatelessWidget {
                       backgroundColor: Color(0xFF61ccee).withOpacity(0.5),
                       text: '-50% OFF!',
                       imagePath: 'images/images_for_tiles/kot1.jpg',
+                      width: 220,
                   ))),
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+            child: SizedBox(
+                height: 450,
+                child: ListView.builder(
+                    itemCount: 7,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => CustomTile(
+                      backgroundColor: Color(0xFF61ccee).withOpacity(0.5),
+                      text: '-50% OFF!',
+                      imagePath: 'images/images_for_tiles/kot1.jpg',
+                      width: 350,
+                    ))),
+          ),
         ],
       ),
     );
