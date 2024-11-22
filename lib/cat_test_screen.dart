@@ -19,6 +19,8 @@ class _CatImageScreenState extends State<CatImageScreen> {
   void fetchCatImage() async {
     try {
       print('Pobieranie danych z Firestore..');
+
+      //Ustawia scierzke do konkretnego kota
       final doc = await FirebaseFirestore.instance
           .collection('catphotos')
           .doc('cat1')
@@ -27,6 +29,8 @@ class _CatImageScreenState extends State<CatImageScreen> {
       if (doc.exists) {
         print('Dokument znaleziony: ${doc.data()}');
         setState(() {
+
+          //Ustawia URL i Tag kota to zmiennych
           imageUrl = doc['imageUrl'];
           tag = doc['tag'];
         });
@@ -49,13 +53,13 @@ class _CatImageScreenState extends State<CatImageScreen> {
           children: [
             imageUrl == null
                 ? CircularProgressIndicator() // Pokazanie loadera w trakcie pobierania
-                : Image.network(
+                : Image.network( // Wyswietlanie obrazka pobranego z internetu
                   imageUrl!, width: 100, height: 100,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(child: CircularProgressIndicator());
                   },
-                  errorBuilder: (context, error, stackTrace) {
+                  errorBuilder: (context, error, stackTrace) { // Jezeli nastapi blad, wypisze ten text
                     return Text('Nie udało się załadować obrazu.');
               },
             ),
