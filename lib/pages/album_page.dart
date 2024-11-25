@@ -38,55 +38,85 @@ class _AlbumPageState extends State<AlbumPage> {
     search(searchController.text);
   }
 
-  void search(String query) {
-    if (query.isEmpty) {
+  void search(dynamic query) {
+    if (query is String && query.isNotEmpty) {
       setState(() {
-        items = allItems; // Jeśli brak zapytania, pokazujemy wszystkie produkty
+        // Filtruj produkty po nazwie
+        items = allItems.where((e) => e.name.toLowerCase().contains(query.toLowerCase())).toList();
+      });
+    } else if (query is Tags) {
+      setState(() {
+        // Filtruj produkty po tagu
+        items = allItems.where((e) => e.tags == query).toList();
       });
     } else {
       setState(() {
-        // Filtrujemy produkty, które mają nazwę zawierającą wyszukiwaną frazę
-        items = allItems.where((e) => e.name.toLowerCase().contains(query.toLowerCase())).toList();
+        items = allItems; // Jeśli brak zapytania, pokaż wszystkie produkty
       });
     }
   }
 
+
   void _showFilterDialog() {
+    List<Tags> uniqueTags = allProducts.getUniqueTags(); // Pobierz unikalne tagi
+    List<bool> localFilterStates = List.generate(uniqueTags.length, (index) => false);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        bool localChecked = isChecked; // Lokalna zmienna do dialogu
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
               title: Text("Filter Options"),
-              content: Row(children: [ Checkbox(
-                    value: localChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        localChecked = value!;
-                      });
-                    }),
-                  Text("Enable filter")]),
-
+              content: SingleChildScrollView(
+                child: Column(
+                  children: List.generate(uniqueTags.length, (index) {
+                    String tagName = uniqueTags[index].toString().split('.').last;
+                    return Row(
+                      children: [
+                        Checkbox(
+                          value: localFilterStates[index],
+                          onChanged: (bool? value) {
+                            setState(() {
+                              localFilterStates[index] = value ?? false;
+                            });
+                          },
+                        ),
+                        Text(tagName),
+                      ],
+                    );
+                  }),
+                ),
+              ),
               actions: [
                 TextButton(
-                  onPressed: () {Navigator.of(context).pop();},
-                  child: Text("Cancel")),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Zamknij dialog bez zmian
+                  },
+                  child: Text("Cancel"),
+                ),
                 TextButton(
                   onPressed: () {
-                    setState(() {
-                      isChecked = localChecked; // Zapisz zmiany globalnie
-                    });
-                    Navigator.of(context).pop(); // Zamknij dialog
+                    for (int i = 0; i < localFilterStates.length; i++) {
+                      if (localFilterStates[i]) {
+                        // Przekaż obiekt Tags do search
+                        search(uniqueTags[i]);
+                      }
+                    }
+                    Navigator.of(context).pop();
                   },
-                  child: Text("OK"))],
+                  child: Text("OK"),
+                ),
+              ],
             );
           },
         );
       },
     );
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {

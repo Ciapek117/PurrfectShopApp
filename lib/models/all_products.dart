@@ -1,6 +1,15 @@
 import 'package:purrfectshop_app/models/product.dart';
 
 class AllProducts{
+  List<Product> getProductList(){
+    return productsList;
+  }
+
+  List<Tags> getUniqueTags() {
+    return productsList.map((product) => product.tags).toSet().toList();
+  }
+
+
   List<Product> productsList = [
     Product(
         name: 'Kotek1',
@@ -38,7 +47,5 @@ class AllProducts{
         tags: Tags.cos5)
   ];
 
-  List<Product> getProductList(){
-    return productsList;
-  }
+
 }
