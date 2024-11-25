@@ -58,7 +58,7 @@ class _MyNavBarBottomState extends State<MyNavBarBottom> {
 
               const GButton(icon: Icons.shopping_bag_rounded, text: 'Cart',iconColor: Color(0xFFD2AF43), textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color:Color(0xFF5F0F40) )),
 
-              const GButton(icon: Icons.logout, text: 'Logout', iconColor: Color(0xFFD2AF43), textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color:Color(0xFF5F0F40) ))
+              const GButton(icon: Icons.settings, text: 'Settings', iconColor: Color(0xFFD2AF43), textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color:Color(0xFF5F0F40) ))
             ])
     );
   }
