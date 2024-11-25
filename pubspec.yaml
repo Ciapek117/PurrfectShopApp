@@ -44,6 +44,11 @@ dependencies:
   glowy_borders: ^1.0.2
   flutter_launcher_icons: ^0.14.1
 
+flutter_icons:
+  image_path: "images/catWithoutName"
+  android: true
+  ios: true
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
