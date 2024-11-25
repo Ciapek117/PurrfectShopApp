@@ -14,7 +14,6 @@ class _AlbumPageState extends State<AlbumPage> {
 
   var allItems = [];
   var items = [];
-  var selectedTags = <Tags>[];
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -45,29 +44,9 @@ class _AlbumPageState extends State<AlbumPage> {
     } else {
       setState(() {
         // Filtrujemy produkty, które mają nazwę zawierającą wyszukiwaną frazę
-        items = allItems.where((e)
-        {
-          bool matchesName = e.name.toLowerCase().contains(query.toLowerCase());
-          bool matchesTags = selectedTags.isEmpty || selectedTags.any((tag) => e.tags == tag);
-
-          return matchesName || matchesTags;
-        }).toList();
+        items = allItems.where((e) => e.name.toLowerCase().contains(query.toLowerCase())).toList();
       });
     }
-  }
-
-  void showTagSelectionDialog() async {
-    final List<Tags> allTags = Tags.values;
-    final List<Tags> selected = List.from(selectedTags);
-
-    bool? shouldUpdate = await showDialog<bool>(
-        context: context,
-        builder: (context){
-          return AlertDialog(
-            title: Text('Wybierz tag:'),
-
-          );
-        });
   }
 
   @override
@@ -82,11 +61,14 @@ class _AlbumPageState extends State<AlbumPage> {
               SearchBar(
                 controller: searchController,
                 hintText: 'Search..',
+
+                trailing: [IconButton(
+                    onPressed: (){}, 
+                    icon: Icon(Icons.filter_alt, color: Color(0xFF5F0F40)))],
+
                 leading: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30),
-                ),
-              ),
+                  icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30))),
               Expanded(
                 child: ListView.builder(
                   itemCount: items.isEmpty ? allItems.length : items.length,
@@ -100,9 +82,17 @@ class _AlbumPageState extends State<AlbumPage> {
                           Text('Name: ${item.name}'),
                           Text('Price: \$${item.price}'),
                           const SizedBox(height: 8),
-                          Text(item.description)]));
-                  })),
+                          Text(item.description),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
-          ))));
+          ),
+        ),
+      ),
+    );
   }
 }
