@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:purrfectshop_app/models/product.dart';
@@ -8,6 +10,32 @@ class AlbumTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void extendPicture() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(product.imagePath, fit: BoxFit.fill),
+
+                  const SizedBox(height: 10),
+
+                  Text(product.description, style: TextStyle(color: Colors.black))]),
+
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Zamknij dialog
+                },
+                child: Text("Cancel"))]);
+        });
+    }
+
+
+
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Center(child: Container(
@@ -18,17 +46,20 @@ class AlbumTile extends StatelessWidget {
 
           child: Row(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28),
-                  border: Border(right: BorderSide(color: Color(0xFF5F0F40), width: 4))
-                ),
+              GestureDetector(
+                onTap: extendPicture,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border(right: BorderSide(color: Color(0xFF5F0F40), width: 4))
+                  ),
 
-                height: 150,
-                width: 220,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Image.asset(product.imagePath, fit: BoxFit.fill))),
+                  height: 150,
+                  width: 220,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: Image.asset(product.imagePath, fit: BoxFit.fill))),
+              ),
 
               const SizedBox(width: 10),
 
