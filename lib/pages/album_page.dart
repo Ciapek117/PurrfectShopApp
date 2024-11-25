@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:purrfectshop_app/models/all_products.dart';
-import 'package:purrfectshop_app/models/product.dart'; // Upewnij się, że zaimportowałeś model Product
+import 'package:purrfectshop_app/models/product.dart';
+
+import '../widgets/album_tile.dart'; // Upewnij się, że zaimportowałeś model Product
 
 class AlbumPage extends StatefulWidget {
   const AlbumPage({super.key});
@@ -80,14 +82,12 @@ class _AlbumPageState extends State<AlbumPage> {
                             setState(() {
                               localFilterStates[index] = value ?? false;
                             });
-                          },
-                        ),
+                          }),
+
                         Text(tagName),
-                      ],
-                    );
-                  }),
-                ),
-              ),
+                      ]);
+                  }))),
+
               actions: [
                 TextButton(
                   onPressed: () {
@@ -101,18 +101,13 @@ class _AlbumPageState extends State<AlbumPage> {
                       if (localFilterStates[i]) {
                         // Przekaż obiekt Tags do search
                         search(uniqueTags[i]);
-                      }
-                    }
+                      }}
                     Navigator.of(context).pop();
                   },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
+
+                  child: Text("OK"))]);
+          });
+      });
   }
 
 
@@ -138,23 +133,14 @@ class _AlbumPageState extends State<AlbumPage> {
                 leading: IconButton(
                   onPressed: () {},
                   icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30))),
+
               Expanded(
                 child: ListView.builder(
                   itemCount: items.isEmpty ? allItems.length : items.length,
                   itemBuilder: (context, index) {
                     final item = items.isEmpty ? allItems[index] : items[index];
 
-                    return Card(
-                      child: Column(
-                        children: [
-                          Image.asset(item.imagePath), // Pokazujemy obrazek produktu
-                          Text('Name: ${item.name}'),
-                          Text('Price: \$${item.price}'),
-                          const SizedBox(height: 8),
-                          Text(item.description),
-                        ],
-                      ),
-                    );
+                    return AlbumTile(product: item);
                   },
                 ),
               ),
