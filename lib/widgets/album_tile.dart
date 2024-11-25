@@ -16,23 +16,32 @@ class AlbumTile extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              content: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(product.imagePath, fit: BoxFit.fill),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: Container(
+                width: double.maxFinite,
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
+                        child: Image.asset(product.imagePath, fit: BoxFit.contain, width: double.infinity)),
 
-                  const SizedBox(height: 10),
+                      const SizedBox(height: 10),
 
-                  Text(product.description, style: TextStyle(color: Colors.black))]),
+                      Text("\""+product.description+"\"", textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ))])),
 
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Zamknij dialog
-                },
-                child: Text("Cancel"))]);
-        });
+                    actions: [
+                      TextButton(
+                        onPressed: () { Navigator.of(context).pop(); },
+                        child: const Text("Cancel"))]);
+          });
     }
+
 
 
 
@@ -48,17 +57,20 @@ class AlbumTile extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: extendPicture,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    border: Border(right: BorderSide(color: Color(0xFF5F0F40), width: 4))
-                  ),
+                child: Tooltip(
+                  message: "Click for description!",
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      border: const Border(right: BorderSide(color: Color(0xFF5F0F40), width: 4))
+                    ),
 
-                  height: 150,
-                  width: 220,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: Image.asset(product.imagePath, fit: BoxFit.fill))),
+                    height: 150,
+                    width: 220,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.asset(product.imagePath, fit: BoxFit.fill))),
+                ),
               ),
 
               const SizedBox(width: 10),
@@ -67,7 +79,7 @@ class AlbumTile extends StatelessWidget {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
                   const SizedBox(height: 2),
 
-                  Text(product.name, style: GoogleFonts.kanit(textStyle: TextStyle(
+                  Text(product.name, style: GoogleFonts.kanit(textStyle: const TextStyle(
                     color: Color(0xFF5F0F40),
                     fontSize: 20,
                     fontWeight: FontWeight.w700
@@ -75,7 +87,7 @@ class AlbumTile extends StatelessWidget {
 
                   const SizedBox(height: 2),
 
-                  Text("Cena: " + product.price + " \$", style: GoogleFonts.kanit(textStyle: TextStyle(
+                  Text("Cena: " + product.price + " \$", style: GoogleFonts.kanit(textStyle: const TextStyle(
                     color: Color(0xFF5F0F40),
                     letterSpacing: 1,
                     fontSize: 15,
