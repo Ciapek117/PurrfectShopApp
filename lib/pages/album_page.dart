@@ -16,6 +16,8 @@ class _AlbumPageState extends State<AlbumPage> {
   var items = [];
   final TextEditingController searchController = TextEditingController();
 
+  bool isChecked = false;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +51,43 @@ class _AlbumPageState extends State<AlbumPage> {
     }
   }
 
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        bool localChecked = isChecked; // Lokalna zmienna do dialogu
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              title: Text("Filter Options"),
+              content: Row(children: [ Checkbox(
+                    value: localChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        localChecked = value!;
+                      });
+                    }),
+                  Text("Enable filter")]),
+
+              actions: [
+                TextButton(
+                  onPressed: () {Navigator.of(context).pop();},
+                  child: Text("Cancel")),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      isChecked = localChecked; // Zapisz zmiany globalnie
+                    });
+                    Navigator.of(context).pop(); // Zamknij dialog
+                  },
+                  child: Text("OK"))],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +102,7 @@ class _AlbumPageState extends State<AlbumPage> {
                 hintText: 'Search..',
 
                 trailing: [IconButton(
-                    onPressed: (){}, 
+                    onPressed: _showFilterDialog,
                     icon: Icon(Icons.filter_alt, color: Color(0xFF5F0F40)))],
 
                 leading: IconButton(
