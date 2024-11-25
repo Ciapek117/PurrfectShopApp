@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(), // Ustaw SplashScreen jako ekran początkowy
+      home: CatImageScreen(), // Ustaw SplashScreen jako ekran początkowy
 
       routes: { //do przechodzenia szybciej miedzy stronami jak usuniesz zabije
         '/homepage' : (context) => HomePage()
