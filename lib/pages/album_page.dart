@@ -16,24 +16,13 @@ class AlbumPage extends StatefulWidget {
   State<AlbumPage> createState() => _AlbumPageState();
 }
 
-class _AlbumPageState extends State<AlbumPage> {
-
-  // dodawanie kota do koszyka
-  void addCatToCart(Product cat) {
-    Provider.of<Cart>(context, listen: false).addItemToCart(cat);
-    print('dziala');
-    // powiadom uzytkownika o wprowadzeniou do koszyka
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Pomyslnie dodano'),
-          content: Text('Sprawdz swoj koszyk'),
-        ),
-    );
-
-  }
+class _AlbumPageState extends State<AlbumPage>
+    with SingleTickerProviderStateMixin{
 
   late AllProducts allProducts;
+  late AnimationController controller;
+  late List<Animation<Offset>> animations;
+
 
   var allItems = [];
   var items = [];
@@ -44,8 +33,12 @@ class _AlbumPageState extends State<AlbumPage> {
   @override
   void initState() {
     super.initState();
+
+    controller = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+
     allProducts = AllProducts(); // Inicjalizujemy AllProducts
     _loadProducts(); // Ładujemy produkty z Firestore
+
     searchController.addListener(queryListener);
   }
 
@@ -67,6 +60,9 @@ class _AlbumPageState extends State<AlbumPage> {
           allItems = products; // Ustawiamy początkowe dane
           items = allItems; // Wyświetlamy wszystkie produkty
         });
+
+        setupAnimation(allItems.length);
+
       } else {
         setState(() {
           items = [];
@@ -85,6 +81,12 @@ class _AlbumPageState extends State<AlbumPage> {
     searchController.removeListener(queryListener);
     searchController.dispose();
     super.dispose();
+  }
+
+  void setupAnimation(int numItems){
+    animations = List.generate(numItems, (index) => Tween(begin: Offset(-1, 0), end: Offset.zero)
+        .animate(CurvedAnimation(parent: controller, curve: Interval(index * (1/numItems), 1))));
+    controller.forward();
   }
 
   void queryListener() {
@@ -156,6 +158,20 @@ class _AlbumPageState extends State<AlbumPage> {
       });
   }
 
+  void addCatToCart(Product cat) {
+    Provider.of<Cart>(context, listen: false).addItemToCart(cat);
+    print('dziala');
+    // powiadom uzytkownika o wprowadzeniou do koszyka
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Pomyslnie dodano'),
+        content: Text('Sprawdz swoj koszyk'),
+      ),
+    );
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -181,10 +197,9 @@ class _AlbumPageState extends State<AlbumPage> {
                   itemCount: items.isEmpty ? allItems.length : items.length,
                   itemBuilder: (context, index) {
                     final item = items.isEmpty ? allItems[index] : items[index];
-                    return AlbumTile(
-                        product: item,
-                        onTap: () => addCatToCart(item),
-                        );
+                    return SlideTransition(
+                      position: animations[index],
+                      child: AlbumTile(product: item, onTap: () => addCatToCart(item),));
                   },
                 ),
               ),
