@@ -1,15 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:purrfectshop_app/auth/login_screen.dart';
 import 'package:purrfectshop_app/cat_test_screen.dart';
 import 'package:purrfectshop_app/pages/home_page.dart';
 import 'package:purrfectshop_app/splash_screen.dart';
 
+import 'models/product_provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ProductProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CatImageScreen(), // Ustaw SplashScreen jako ekran początkowy
+      home: SplashScreen(), // Ustaw SplashScreen jako ekran początkowy
 
       routes: { //do przechodzenia szybciej miedzy stronami jak usuniesz zabije
         '/homepage' : (context) => HomePage()
