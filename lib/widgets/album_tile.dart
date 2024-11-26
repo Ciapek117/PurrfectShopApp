@@ -144,7 +144,6 @@ class AlbumTile extends StatelessWidget {
                       onPressed: (){},
                       icon: Icon(Icons.add_circle_outline, color: Color(0xFFD2AF43), size: 20,)),
               ),
-
             ],
           ),
         ),
