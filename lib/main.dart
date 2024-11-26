@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:purrfectshop_app/auth/login_screen.dart';
 import 'package:purrfectshop_app/auth/signup_screen.dart';
-import 'package:purrfectshop_app/pages/home_page.dart';
+import 'package:purrfectshop_app/home_screen.dart';
 import 'package:purrfectshop_app/splash_screen.dart';
 
 import 'models/product_provider.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(), // Ustaw SplashScreen jako ekran początkowy
 
       routes: { //do przechodzenia szybciej miedzy stronami jak usuniesz zabije
-        '/homepage' : (context) => HomePage(),
+        '/homescreen' : (context) => HomeScreen(),
         '/loginpage' : (context) => LoginScreen(),
         '/signuppage' : (context) => SignupScreen()
       }

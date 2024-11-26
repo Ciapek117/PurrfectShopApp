@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   goToSignup(BuildContext context) => Navigator.pushNamed(context, '/signuppage');
 
-  goToHome(BuildContext context) => Navigator.pushNamed(context, '/homepage');
+  goToHome(BuildContext context) => Navigator.pushNamed(context, '/homescreen');
 
   Future _login() async {
     final user = await _auth.loginUserWithEmailAndPassword(_email.text, _password.text);
