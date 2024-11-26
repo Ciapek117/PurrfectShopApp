@@ -48,17 +48,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  goToLogin(BuildContext context) => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
+  goToLogin(BuildContext context) => Navigator.pushNamed(context, 'loginpage');
 }
-
-
-//CustomButton(
-//               label: "Sign Out",
-//               onPressed: () async {
-//                 await auth.signout();
-//                 goToLogin(context);
-//               },
-//             )

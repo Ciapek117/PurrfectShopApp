@@ -79,12 +79,10 @@ class AlbumTile extends StatelessWidget {
                       border: const Border(right: BorderSide(color: Color(0xFF5F0F40), width: 4)),
                     ),
                     height: 150,
-                    width: 220,
+                    width: 200,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
-                      child: Image.network(
-                        product.imagePath,
-                        fit: BoxFit.fill,
+                      child: Image.network(product.imagePath, fit: BoxFit.fill,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child; // Jeśli obrazek już załadowany, pokazujemy go
@@ -93,23 +91,18 @@ class AlbumTile extends StatelessWidget {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                  (loadingProgress.expectedTotalBytes ?? 1)
-                                  : null,
-                            ),
-                          );
+                                  (loadingProgress.expectedTotalBytes ?? 1) : null));
                         },
                         errorBuilder: (context, error, stackTrace) {
                           return Icon(Icons.error); // Ikona błędu jeśli obrazek się nie załadował
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                        }))))),
+
               const SizedBox(width: 10),
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const SizedBox(height: 2),
                     Text(
@@ -119,24 +112,39 @@ class AlbumTile extends StatelessWidget {
                           color: Color(0xFF5F0F40),
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
+                        )), softWrap: true, overflow: TextOverflow.visible,textAlign: TextAlign.center,),
+
                     const SizedBox(height: 2),
+
                     Text(
-                      "Cena: ${product.price} \$",
+                      "Cena: \n${product.price} \$",
                       style: GoogleFonts.kanit(
                         textStyle: const TextStyle(
                           color: Color(0xFF5F0F40),
                           letterSpacing: 1,
                           fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                          fontWeight: FontWeight.w500)), textAlign: TextAlign.center,),
+
+
                   ],
                 ),
               ),
+
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Color(0xFF5F0F40),
+                  border: Border.all(
+                    color: Color(0xFFD2AF43),
+                    width: 3
+                  ),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20))
+                ),
+                child: IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.add_circle_outline, color: Color(0xFFD2AF43), size: 20,)),
+              ),
+
             ],
           ),
         ),
