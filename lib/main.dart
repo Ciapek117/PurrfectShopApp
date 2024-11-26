@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:purrfectshop_app/auth/login_screen.dart';
-import 'package:purrfectshop_app/cat_test_screen.dart';
 import 'package:purrfectshop_app/pages/home_page.dart';
 import 'package:purrfectshop_app/splash_screen.dart';
 
