@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:purrfectshop_app/models/all_products.dart';
+import 'package:purrfectshop_app/models/cart.dart';
 import 'package:purrfectshop_app/models/product.dart';
 
 import '../widgets/album_tile.dart';
@@ -13,6 +17,22 @@ class AlbumPage extends StatefulWidget {
 }
 
 class _AlbumPageState extends State<AlbumPage> {
+
+  // dodawanie kota do koszyka
+  void addCatToCart(Product cat) {
+    Provider.of<Cart>(context, listen: false).addItemToCart(cat);
+    print('dziala');
+    // powiadom uzytkownika o wprowadzeniou do koszyka
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Pomyslnie dodano'),
+          content: Text('Sprawdz swoj koszyk'),
+        ),
+    );
+
+  }
+
   late AllProducts allProducts;
 
   var allItems = [];
@@ -139,7 +159,7 @@ class _AlbumPageState extends State<AlbumPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<Cart>(builder: (context, value, child) => Scaffold(
       backgroundColor: Color(0xFF5F0F40),
       body: Center(
         child: Padding(
@@ -161,7 +181,10 @@ class _AlbumPageState extends State<AlbumPage> {
                   itemCount: items.isEmpty ? allItems.length : items.length,
                   itemBuilder: (context, index) {
                     final item = items.isEmpty ? allItems[index] : items[index];
-                    return AlbumTile(product: item);
+                    return AlbumTile(
+                        product: item,
+                        onTap: () => addCatToCart(item),
+                        );
                   },
                 ),
               ),
@@ -169,6 +192,7 @@ class _AlbumPageState extends State<AlbumPage> {
           ),
         ),
       ),
+    ),
     );
   }
 }
