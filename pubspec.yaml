@@ -43,6 +43,7 @@ dependencies:
   google_fonts: ^6.2.1
   glowy_borders: ^1.0.2
   flutter_launcher_icons: ^0.14.1
+  provider: ^6.1.2
 
 flutter_icons:
   image_path: "images/catWithoutName"
