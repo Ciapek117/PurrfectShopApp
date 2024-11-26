@@ -1,12 +1,4 @@
-enum Tags{
-  cos1,
-  cos2,
-  cos3,
-  cos4,
-  cos5,
-}
-
-class Product{
+class Product {
   final String name;
   final String imagePath;
   final String price;
@@ -18,27 +10,37 @@ class Product{
     required this.imagePath,
     required this.price,
     required this.description,
-    required this.tags
+    required this.tags,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      name: map['name'] ?? '',
-      price: map['price'] ?? 0.0,
-      imagePath: map['imageUrl'],
-      description: map['description'],
-      tags: map['tag'],
+      name: map['name'] ?? 'No name',
+      price: map['price'] ?? '0.0',
+      imagePath: map['imageUrl'] ?? '',
+      description: map['description'] ?? 'No description',
+      tags: Tags.values.firstWhere(
+            (e) => e.toString() == 'Tags.${map['tag']}',
+        orElse: () => Tags.cos1, // Domyślny tag
+      ),
     );
   }
 
-  // Konwersja obiektu Product na mapę (do zapisania w Firestore)
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'price': price,
-      'imageUrl' : imagePath,
-      'description' : description,
-      'tag': tags
+      'imageUrl': imagePath,
+      'description': description,
+      'tag': tags.toString().split('.').last,
     };
   }
+}
+
+enum Tags {
+  cos1,
+  cos2,
+  cos3,
+  cos4,
+  cos5,
 }
