@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:purrfectshop_app/auth/login_screen.dart';
 import 'package:purrfectshop_app/auth/signup_screen.dart';
 import 'package:purrfectshop_app/home_screen.dart';
+import 'package:purrfectshop_app/models/cart.dart';
 import 'package:purrfectshop_app/splash_screen.dart';
 
 import 'models/product_provider.dart';
@@ -25,20 +26,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: SplashScreen(), // Ustaw SplashScreen jako ekran początkowy
+    return ChangeNotifierProvider(
+        create: (context) => Cart(),
+        builder: (context, child) =>  MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            home: SplashScreen(), // Ustaw SplashScreen jako ekran początkowy
 
-      routes: { //do przechodzenia szybciej miedzy stronami jak usuniesz zabije
-        '/homescreen' : (context) => HomeScreen(),
-        '/loginpage' : (context) => LoginScreen(),
-        '/signuppage' : (context) => SignupScreen()
-      }
+            routes: { //do przechodzenia szybciej miedzy stronami jak usuniesz zabije
+              '/homescreen' : (context) => HomeScreen(),
+              '/loginpage' : (context) => LoginScreen(),
+              '/signuppage' : (context) => SignupScreen()
+            }
+        )
     );
   }
 }

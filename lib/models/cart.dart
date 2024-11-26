@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:purrfectshop_app/models/product.dart';
 import 'package:purrfectshop_app/models/all_products.dart';
 
-class Cart {
+class Cart extends ChangeNotifier{
 
   // Lista kotkow na sprzedaz
   final List<Product> catList = AllProducts().getProductList();
@@ -22,11 +23,13 @@ class Cart {
   // dodaj kotka do koszyka
   void addItemToCart(Product cat) {
     userCart.add(cat);
+    notifyListeners();
   }
 
   // usun item
   void removeItemFromCart(Product cat) {
     userCart.remove(cat);
+    notifyListeners();
   }
 
 }
