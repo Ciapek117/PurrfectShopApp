@@ -21,7 +21,7 @@ class Product {
       description: map['description'] ?? 'No description',
       tags: Tags.values.firstWhere(
             (e) => e.toString() == 'Tags.${map['tag']}',
-        orElse: () => Tags.cos1, // Domyślny tag
+        orElse: () => Tags.orange,
       ),
     );
   }
@@ -38,9 +38,7 @@ class Product {
 }
 
 enum Tags {
-  cos1,
-  cos2,
-  cos3,
-  cos4,
-  cos5,
+  orange,
+  white,
+  gray,
 }
