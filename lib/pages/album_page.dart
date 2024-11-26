@@ -182,15 +182,19 @@ class _AlbumPageState extends State<AlbumPage>
           padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
           child: Column(
             children: <Widget>[
-              SearchBar(
-                  controller: searchController,
-                  hintText: 'Search..',
-                  trailing: [IconButton(
-                      onPressed: _showFilterDialog,
-                      icon: Icon(Icons.filter_alt, color: Color(0xFF5F0F40)))],
-                  leading: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30))),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: SearchBar(
+                    controller: searchController,
+
+                    hintText: 'Search..',
+                    trailing: [IconButton(
+                        onPressed: _showFilterDialog,
+                        icon: Icon(Icons.filter_alt, color: Color(0xFF5F0F40)))],
+                    leading: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.search, color: Color(0xFF5F0F40), size: 30))),
+              ),
 
               Expanded(
                 child: ListView.builder(
@@ -199,7 +203,7 @@ class _AlbumPageState extends State<AlbumPage>
                     final item = items.isEmpty ? allItems[index] : items[index];
                     return SlideTransition(
                       position: animations[index],
-                      child: AlbumTile(product: item, onTap: () => addCatToCart(item),));
+                      child: AlbumTile(product: item, onTap: () => addCatToCart(item)));
                   },
                 ),
               ),
