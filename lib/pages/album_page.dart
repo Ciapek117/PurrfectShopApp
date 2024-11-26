@@ -98,54 +98,42 @@ class _AlbumPageState extends State<AlbumPage> {
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
               title: Text("Filter Options"),
-              content: SingleChildScrollView(
-                child: Column(
+              content: SingleChildScrollView( child: Column(
                   children: List.generate(uniqueTags.length, (index) {
                     String tagName = uniqueTags[index].toString().split('.').last;
-                    return Row(
-                      children: [
+                    return Row(children: [
                         Checkbox(
                           value: localFilterStates[index],
                           onChanged: (bool? value) {
                             setState(() {
                               localFilterStates[index] = value ?? false;
                             });
-                          },
-                        ),
-                        Text(tagName),
-                      ],
-                    );
-                  }),
-                ),
-              ),
+                          }),
+                        Text(tagName)]);
+                  }))),
+
               actions: [
                 // Przycisk Cancel
                 TextButton(
                   onPressed: () {
+                    search('');
                     Navigator.of(context).pop(); // Zamknij dialog bez zmian
                   },
-                  child: Text("Cancel"),
-                ),
+                  child: Text("Cancel")),
                 // Przycisk OK
                 TextButton(
                   onPressed: () {
                     // Przekazanie zaznaczonych tagów do funkcji search
                     for (int i = 0; i < localFilterStates.length; i++) {
                       if (localFilterStates[i]) {
-                        // Jeśli tag jest zaznaczony, filtruj według niego
                         search(uniqueTags[i]);
                       }
                     }
-                    Navigator.of(context).pop(); // Zamknij dialog po zastosowaniu filtra
+                    Navigator.of(context).pop();
                   },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
+                  child: Text("OK"))]);
+          });
+      });
   }
 
 

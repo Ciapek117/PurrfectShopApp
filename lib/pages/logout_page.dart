@@ -14,9 +14,7 @@ class LogoutPage extends StatelessWidget {
           CustomButton(
               label: 'Log out',
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()));
+                Navigator.pushNamed(context,'/loginpage');
               }),
           Spacer(),
         ],
