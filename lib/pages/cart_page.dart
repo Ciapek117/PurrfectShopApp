@@ -15,7 +15,7 @@ class CartPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         children: [
-          Text('My cart', style: GoogleFonts.kanit(
+          Text('My cart', style: GoogleFonts.b612(
             fontWeight: FontWeight.bold,
             fontSize: 40,
           color: Color(0xFFD2AF43)),
