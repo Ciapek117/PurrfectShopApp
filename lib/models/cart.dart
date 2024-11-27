@@ -36,7 +36,7 @@ class Cart extends ChangeNotifier {
   double get totalAmount {
     double total = 0.0;
     _userCart.forEach((product, quantity) {
-      total += double.tryParse(product.price) ?? 0 * quantity;
+      total += (double.tryParse(product.price)! * quantity)!;
     });
     return total;
   }

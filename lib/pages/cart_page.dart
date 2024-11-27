@@ -57,6 +57,7 @@ class CartPage extends StatelessWidget {
                   color: Color(0xFFD2AF43),
                 ),
               ),
+              const SizedBox(height: 5),
             ],
           ),
         );
