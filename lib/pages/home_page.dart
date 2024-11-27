@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:glowy_borders/glowy_borders.dart';
-import '../models/product.dart';
 import '../widgets/gif_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -97,16 +94,12 @@ class _HomePageState extends State<HomePage> {
                       child: AnimatedSwitcher(duration: const Duration(seconds: 1),transitionBuilder: (Widget child, Animation<double> animation) {
                       return FadeTransition(opacity: animation, child: child);},
                         child: GifTile(
-                            key: ValueKey<int>(currentGifIndex),
+                            key: ValueKey<int>(currentGifIndex), //ustawia, ze kazdy tile jest "wyjatkowy" na zasadzie currentGifIndex
                             gifPath: paths[currentGifIndex],
                             width: 350)))
 
-                    : const Center(child: CircularProgressIndicator(), // Ładowanie w trakcie pobierania gifów
-                ),
-              ),
-            ),
-            ]),
-        ),
-      );
+                // Ładowanie w trakcie pobierania gifów
+                    : const Center(child: CircularProgressIndicator()))),
+            ])));
   }
 }
