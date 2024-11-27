@@ -31,4 +31,13 @@ class Cart extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // Oblicz łączną wartość koszyka
+  double get totalAmount {
+    double total = 0.0;
+    _userCart.forEach((product, quantity) {
+      total += double.tryParse(product.price) ?? 0 * quantity;
+    });
+    return total;
+  }
 }

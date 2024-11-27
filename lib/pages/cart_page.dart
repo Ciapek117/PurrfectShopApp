@@ -48,6 +48,15 @@ class CartPage extends StatelessWidget {
                   },
                 ),
               ),
+              const SizedBox(height: 20), // Dodajemy odstęp między listą a sumą
+              Text(
+                'Total: \$${value.totalAmount.toStringAsFixed(2)}',
+                style: GoogleFonts.kanit(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFFD2AF43),
+                ),
+              ),
             ],
           ),
         );
