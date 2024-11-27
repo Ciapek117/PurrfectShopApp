@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:glowy_borders/glowy_borders.dart';
 import '../models/product.dart';
-import '../widgets/custom_tile.dart';
+import '../widgets/gif_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -65,6 +65,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void onSwipe(DragUpdateDetails details){
+    if(details.primaryDelta! > 0){
+      setState(() {
+        currentGifIndex = (currentGifIndex - 1 + paths.length) % paths.length;
+      });
+    } else if(details.primaryDelta! < 0){
+      setState(() {
+        currentGifIndex = (currentGifIndex + 1) % paths.length;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,20 +87,24 @@ class _HomePageState extends State<HomePage> {
           children:[
             const SizedBox(height: 25),
 
-
-            //TODO: zrobic jednego tile'a, ktory bedzie mial przykladowo 7 gifow z firebase'a
-            //TODO: za pomoca duration zmieniac te gify w kolko (np. co 3sek)
-
+            //tile z gifami
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
               child: SizedBox(
-                  height: 450,
-                  child: CustomTile(
-                    backgroundColor: Color(0xFF61ccee).withOpacity(0.5),
-                    text: '-50% OFF!',
-                    gifPath: paths[currentGifIndex],
-                    width: 350,
-                  ))),
+                height: 450,
+                child: paths.isNotEmpty
+                    ? GestureDetector(onHorizontalDragUpdate: onSwipe,
+                      child: AnimatedSwitcher(duration: const Duration(seconds: 1),transitionBuilder: (Widget child, Animation<double> animation) {
+                      return FadeTransition(opacity: animation, child: child);},
+                        child: GifTile(
+                            key: ValueKey<int>(currentGifIndex),
+                            gifPath: paths[currentGifIndex],
+                            width: 350)))
+
+                    : const Center(child: CircularProgressIndicator(), // Ładowanie w trakcie pobierania gifów
+                ),
+              ),
+            ),
             ]),
         ),
       );
