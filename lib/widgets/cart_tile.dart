@@ -65,7 +65,7 @@ class _CartItemState extends State<CartItem> with SingleTickerProviderStateMixin
     double productPrice = double.tryParse(widget.cat.price) ?? 0.0; // Jeśli nie uda się przekonwertować, ustawi wartość na 0.0
 
     // Oblicz sumę na podstawie quantity i ceny
-    double totalPrice = productPrice * widget.quantity;
+    String totalPrice = (productPrice * widget.quantity).toStringAsFixed(2);
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
