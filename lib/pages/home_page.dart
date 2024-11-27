@@ -82,7 +82,18 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children:[
-            const SizedBox(height: 25),
+
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                      itemCount: 4,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => GifTile(gifPath: paths[currentGifIndex], width: 200))),
+            ),
+
+            const SizedBox(height: 15),
 
             //tile z gifami
             Padding(
