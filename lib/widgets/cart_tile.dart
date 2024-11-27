@@ -51,7 +51,7 @@ class _CartItemState extends State<CartItem> {
           ),
           trailing: IconButton( //TODO Zmien na taki jak dodawanie tylko usuwanie
               icon:  Icon(Icons.delete),
-              onPressed: removeCatFromCart,
+              onPressed: removeCatFromCart, // Funkcja usuwa kota z koszyka
           ),
         )
     );
