@@ -6,10 +6,14 @@ import '../models/cart.dart';
 
 class CartItem extends StatefulWidget {
   final Product cat;
+  final int quantity; // Ilość produktu
+  final VoidCallback onRemove;
 
   const CartItem({
     super.key,
     required this.cat,
+    required this.quantity,
+    required this.onRemove,
   });
 
   @override
@@ -30,7 +34,7 @@ class _CartItemState extends State<CartItem> with SingleTickerProviderStateMixin
 
     _slideAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(-1.5, 0), // Przesunięcie w lewo
+      end: const Offset(-1.5, 0),
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
@@ -44,13 +48,22 @@ class _CartItemState extends State<CartItem> with SingleTickerProviderStateMixin
   }
 
   Future<void> removeCatFromCart() async {
-    await _animationController.forward(); // Uruchom animację przesuwania
-    Future.delayed(const Duration(milliseconds: 100)); // Czas na zakończenie efektu
-    Provider.of<Cart>(context, listen: false).removeItemFromCart(widget.cat); // Usuń z koszyka
+    if (widget.quantity > 1) {
+      widget.onRemove();
+    } else {
+      await _animationController.forward();
+      widget.onRemove();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Przekonwertuj cenę z String na double
+    double productPrice = double.tryParse(widget.cat.price) ?? 0.0; // Jeśli nie uda się przekonwertować, ustawi wartość na 0.0
+
+    // Oblicz sumę na podstawie quantity i ceny
+    double totalPrice = productPrice * widget.quantity;
+
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SlideTransition(
@@ -62,51 +75,30 @@ class _CartItemState extends State<CartItem> with SingleTickerProviderStateMixin
           ),
           child: Row(
             children: [
-              GestureDetector(
-                child: Tooltip(
-                  message: "Click for description!",
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28),
-                      border: const Border(
-                        right: BorderSide(color: Color(0xFF5F0F40), width: 4),
-                      ),
-                    ),
-                    height: 100,
-                    width: 150,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: Image.network(
-                        widget.cat.imagePath,
-                        fit: BoxFit.fill,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                  (loadingProgress.expectedTotalBytes ?? 1)
-                                  : null,
-                            ),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.error);
-                        },
-                      ),
+              // Obraz
+              Tooltip(
+                message: "Click for description!",
+                child: Container(
+                  height: 110,
+                  width: 150,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: Image.network(
+                      widget.cat.imagePath,
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.error);
+                      },
                     ),
                   ),
                 ),
               ),
               const SizedBox(width: 10),
+              // Dane produktu
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 2),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
                       widget.cat.name,
                       style: GoogleFonts.kanit(
@@ -116,30 +108,37 @@ class _CartItemState extends State<CartItem> with SingleTickerProviderStateMixin
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
-                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 5),
                     Text(
-                      "${widget.cat.price} \$",
+                      "Quantity: ${widget.quantity}",
                       style: GoogleFonts.kanit(
                         textStyle: const TextStyle(
                           color: Color(0xFF5F0F40),
-                          letterSpacing: 1,
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "$totalPrice \$", // Używamy przekonwertowanej ceny
+                      style: GoogleFonts.kanit(
+                        textStyle: const TextStyle(
+                          color: Color(0xFF5F0F40),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+              // Usuwanie produktu
               GestureDetector(
                 onTap: removeCatFromCart,
                 child: Container(
-                  height: 100,
+                  height: 110,
                   width: 50,
                   decoration: BoxDecoration(
                     color: const Color(0xFF5F0F40),
@@ -155,7 +154,6 @@ class _CartItemState extends State<CartItem> with SingleTickerProviderStateMixin
                   child: const Icon(
                     Icons.delete,
                     color: Color(0xFFD2AF43),
-                    size: 20,
                   ),
                 ),
               ),

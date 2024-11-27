@@ -1,5 +1,4 @@
 class Product {
-  final String id;
   final String name;
   final String imagePath;
   final String price;
@@ -7,7 +6,6 @@ class Product {
   final Tags tags;
 
   Product({
-    required this.id,
     required this.name,
     required this.imagePath,
     required this.price,
@@ -17,7 +15,6 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: map['id'] ?? '0',
       name: map['name'] ?? 'No name',
       price: map['price'] ?? '0.0',
       imagePath: map['imageUrl'] ?? '',
@@ -31,7 +28,6 @@ class Product {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
       'price': price,
       'imageUrl': imagePath,
@@ -39,6 +35,17 @@ class Product {
       'tag': tags.toString().split('.').last,
     };
   }
+
+  // Nadpisanie operatora == do porównania produktów po nazwie lub innym polu
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Product && other.name == name; // Porównujemy po nazwie produktu
+  }
+
+  // Nadpisanie hashCode, aby pasował do operatora ==
+  @override
+  int get hashCode => name.hashCode; // Używamy `name` do generowania hashCode
 }
 
 enum Tags {

@@ -11,34 +11,47 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Cart>(builder: (context, value, child) => Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Column(
-        children: [
-          Text('My cart', style: GoogleFonts.b612(
-            fontWeight: FontWeight.bold,
-            fontSize: 40,
-          color: Color(0xFFD2AF43)),
-          ),
-          
-          const SizedBox(height: 10,),
+    return Consumer<Cart>(
+      builder: (context, value, child) {
+        // Pobierz listę produktów w koszyku
+        var cartItems = value.getUserCart();
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: value.getUserCart().length,
-              itemBuilder: (context, index) {
-                Product individualCat = value.getUserCart()[index];
-                return CartItem(
-                  key: ValueKey(individualCat.id), // Unikalny klucz
-                  cat: individualCat,
-                );
-              },
-            ),
-          ),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            children: [
+              Text(
+                'My cart',
+                style: GoogleFonts.b612(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  color: Color(0xFFD2AF43),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    final cartItem = cartItems[index];
+                    final product = cartItem.key;
+                    final quantity = cartItem.value;
 
-        ],
-      ),
-    ),
+                    return CartItem(
+                      key: ValueKey(product),  // Unikalny klucz
+                      cat: product,
+                      quantity: quantity,
+                      onRemove: () {
+                        Provider.of<Cart>(context, listen: false).removeItemFromCart(product);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -2,34 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:purrfectshop_app/models/product.dart';
 import 'package:purrfectshop_app/models/all_products.dart';
 
-class Cart extends ChangeNotifier{
+class Cart extends ChangeNotifier {
+  final Map<Product, int> _userCart = {};
 
-  // Lista kotkow na sprzedaz
-  final List<Product> catList = AllProducts().getProductList();
-
-  // Lista kotkow w koszyku
-  List<Product> userCart = [];
-
-  // pobiera liste butow na sprzedaz
-  List<Product> getCatList() {
-    return catList;
+  // Pobierz koszyk jako lista produktów
+  List<MapEntry<Product, int>> getUserCart() {
+    return _userCart.entries.toList();
   }
 
-  // pobierz koszyk
-  List<Product> getUserCart() {
-    return userCart;
-  }
-
-  // dodaj kotka do koszyka
-  void addItemToCart(Product cat) {
-    userCart.add(cat);
+  // Dodaj produkt do koszyka
+  void addItemToCart(Product product) {
+    if (_userCart.containsKey(product)) {
+      _userCart[product] = _userCart[product]! + 1;
+    } else {
+      _userCart[product] = 1;
+    }
     notifyListeners();
   }
 
-  // usun item
-  void removeItemFromCart(Product cat) {
-    userCart.remove(cat);
-    notifyListeners();
+  // Usuń produkt z koszyka
+  void removeItemFromCart(Product product) {
+    if (_userCart.containsKey(product)) {
+      if (_userCart[product]! > 1) {
+        _userCart[product] = _userCart[product]! - 1;
+      } else {
+        _userCart.remove(product);
+      }
+      notifyListeners();
+    }
   }
-
 }
