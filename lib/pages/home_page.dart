@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:glowy_borders/glowy_borders.dart';
@@ -13,11 +15,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> paths = [];
+  int currentGifIndex = 0;
+  Timer? gifTimer;
 
   @override
   void initState() {
     super.initState();
     _loadProducts();
+  }
+
+  @override
+  void dispose() {
+    gifTimer?.cancel();
+    super.dispose();
   }
 
   Future<void> _loadProducts() async {
@@ -35,6 +45,7 @@ class _HomePageState extends State<HomePage> {
         });
 
         print("${paths.length} ILOSC LINKOW W DOCS!");
+        startGifRotation();
 
       } else {
         print("Brak produktów w kolekcji.");
@@ -42,6 +53,16 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print("Błąd podczas ładowania produktów: $e");
     }
+  }
+
+  void startGifRotation(){
+    if(paths.isEmpty) return;
+
+    gifTimer = Timer.periodic(const Duration(seconds: 4), (timer){
+      setState(() {
+        currentGifIndex = (currentGifIndex + 1) % paths.length;
+      });
+    });
   }
 
 
@@ -65,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   child: CustomTile(
                     backgroundColor: Color(0xFF61ccee).withOpacity(0.5),
                     text: '-50% OFF!',
-                    gifPath: paths[paths.length - 1],
+                    gifPath: paths[currentGifIndex],
                     width: 350,
                   ))),
             ]),
