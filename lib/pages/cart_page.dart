@@ -22,18 +22,19 @@ class CartPage extends StatelessWidget {
           ),
           
           const SizedBox(height: 10,),
-          
+
           Expanded(
-              child: ListView.builder(
-                itemCount: value.getUserCart().length,
-                  itemBuilder: (context, index) {
-                    // pobierz konkretnego kota
-                    Product individualCat = value.getUserCart()[index];
-
-                    // zwroc koszyk
-                    return CartItem(cat: individualCat);
-
-                  },))
+            child: ListView.builder(
+              itemCount: value.getUserCart().length,
+              itemBuilder: (context, index) {
+                Product individualCat = value.getUserCart()[index];
+                return CartItem(
+                  key: ValueKey(individualCat.id), // Unikalny klucz
+                  cat: individualCat,
+                );
+              },
+            ),
+          ),
 
         ],
       ),
